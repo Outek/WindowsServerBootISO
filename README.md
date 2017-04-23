@@ -1,5 +1,5 @@
 # Windows
-Build a specialized Windows Server Boot ISO with a modified autounattended.xml on the fly in 60 seconds. 
+Build a specialized Windows Server Boot ISO with a modified autounattended.xml on the fly in 60(at the moment it's 200secs) seconds. 
 
 # Windows Unattended Installation Windows Server 2016
 
@@ -8,6 +8,7 @@ Build a specialized Windows Server Boot ISO with a modified autounattended.xml o
 - Prepared autounattended.xml file with a placeholder for the computername %COMPUTERNAME%
 - Deployment and Imaging Tools Environment
 - Windows ADK(Assessment and Deployment Kit)
+- For a Configuration with static IP you need a json file with IP, Subnet etc.
 
 # Mount ISO, copy install.wim
 - Mount ISO

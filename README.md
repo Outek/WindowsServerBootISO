@@ -9,7 +9,7 @@ Build a specialized Windows Server Boot ISO with a modified autounattended.xml o
 - Fully "Zero Touch Installation" without SCCM or Altiris or something similar
 - Same Workflow for ZTI for VMs and physical Server
 
-#Cons
+# Cons
 - DNS must be available
 - IP must be available
 

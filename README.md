@@ -1,20 +1,37 @@
 # Windows
-Build a specialized Windows Server Boot ISO with a modified autounattended.xml on the fly in 60(at the moment it's 200secs) seconds. 
+Build a specialized Windows Server Boot ISO with a modified autounattended.xml on the fly in 80 seconds(may depend on your environment). 
 
 # Windows Unattended Installation Windows Server 2016
 
+# Pros
+- No need for PXE
+- No need for DHCP
+- Fully "Zero Touch Installation" without SCCM or Altiris or something similar
+- Same Workflow for ZTI for VMs and physical Server
+
+#Cons
+- DNS must be available
+- IP must be available
+
 # Requirements
+- Fixed network settings
 - Windows Server 2016 ISO File
-- Prepared autounattended.xml file with a placeholder for the computername %COMPUTERNAME%
+- Prepared autounattended.xml file with a placeholder for the computername %COMPUTERNAME%, %IpAddress%, %Subnet%, %Gateway%, %Suffix%, %DNS%
 - Deployment and Imaging Tools Environment
 - Windows ADK(Assessment and Deployment Kit)
-- For a Configuration with static IP you need a json file with IP, Subnet etc.
 
-# Mount ISO, copy install.wim
-- Mount ISO
+# Step by step
+- Mount original setup ISO
 - Copy install.wim to Temp
-- Copy Files from ISO to Temp
-- Generate unattended file with install.wim
+- Copy Files from ISO to Temp, exclude folder "NanoServer"
 - Place unattended file in source
+- Modify unattended file
 - Replace install.wim in source
-- Generate iso with osdimg.exe from Deplyoment and Imaging Tools Environment
+- Generate *.iso with osdimg.exe from "Deplyoment and Imaging Tools Environment"
+- Create VM with ISO as boot option
+- enjoy ;)
+
+# Next step
+- Create project in git 
+- Build release pipeline
+- Create *.iso for every new server

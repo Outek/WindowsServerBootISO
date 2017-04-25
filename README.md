@@ -1,5 +1,6 @@
 # Windows
 Build a specialized Windows Server Boot ISO with a modified autounattended.xml on the fly in 80 seconds(may depend on your environment). 
+In this example the chosen Version is "Windows Server 2016 SERVERDATACENTER"
 
 # Windows Unattended Installation Windows Server 2016
 
@@ -19,6 +20,10 @@ Build a specialized Windows Server Boot ISO with a modified autounattended.xml o
 - Prepared autounattended.xml file with a placeholder for the computername %COMPUTERNAME%, %IpAddress%, %Subnet%, %Gateway%, %Suffix%, %DNS%
 - Deployment and Imaging Tools Environment
 - Windows ADK(Assessment and Deployment Kit)
+
+# Optional
+- Place Serial Key in autoattend.xml
+- Change OS Version by changing SERVERDATACENTER to SERVERSTANDARD
 
 # Step by step
 - Mount original setup ISO

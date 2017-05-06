@@ -41,6 +41,7 @@ Param(
         [string]$DebugMode
     )
 
+#Initialyze Stopwatch
 $StopWatch = New-Object System.Diagnostics.Stopwatch
 $StopWatch.Start()
 
@@ -116,7 +117,11 @@ Function Mount-StandardISO
         [string]$Temp_Folder_WIM,
         [string]$Temp_Folder_Data
     )
-
+    if(!(Test-path $Image_Path))
+    {
+        Write-Debug "ISO not found"
+        Exit
+    }
     $Mountdrive = Mount-DiskImage -ImagePath $Image_Path -PassThru
     $driveLetter = ($Mountdrive | Get-Volume).DriveLetter
     Write-Debug "ISO mounted with driveletter $driveletter"

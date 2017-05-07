@@ -54,6 +54,7 @@ If($Temp_Folder_Data.Length -lt 1)
 {
     $Temp_Folder_Data = "C:\Temp\ISO"
 }
+
 If($Temp_Folder_WIM.Length -lt 1)
 {
     $Temp_Folder_WIM = "C:\Temp\WIM"
@@ -68,7 +69,7 @@ If($Image_Path.Length -lt 1)
 #Path to the prepared autoattend.xml
 If($autounattend_File_Path.Length -lt 1)
 {
-    $autounattend_File_Path = "C:\Temp\Answer_File\autounattend.xml"
+    $autounattend_File_Path = "..\Answer_File_staticIP_UEFI\autounattend.xml"
 }
 
 #Servername
@@ -105,6 +106,13 @@ if($Path_to_Oscdimg.Length -lt 1)
 {
     $Path_to_Oscdimg = "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg"
 }
+
+Write-Debug "Servername: $Servername"
+Write-Debug "IP: $IP"
+Write-Debug "DNS: $DNS"
+Write-Debug "Subnet: $Subnet"
+Write-Debug "Gateway: $Gateway"
+Write-Debug "Domain_Suffix: $Domain_Suffix"
 
 #Debug on/off"
 If($DebugMode -eq $true)
@@ -188,7 +196,7 @@ Function Replace_Placeholders
     [Parameter(Mandatory = $true)]
     [string]$Temp_Folder_Data
     )
-
+    Write-Debug "Replace $OldValue with $NewValue"
     $ConfigFile = "$Temp_Folder_Data\autounattend.xml"
     (Get-Content $ConfigFile)  |
     ForEach-Object {$_ -replace $OldValue, $NewValue} | 
@@ -231,7 +239,7 @@ Function Modify_autounattend_File
     try 
     {
         Copy-item -Path $autounattend_File_Path -Destination $Temp_Folder_Data
-        Write-Debug "copy autounattend succesfull"
+        Write-Debug "copy autounattend from $autounattend_File_Path succesfull to $Temp_Folder_Data"
     }
     catch 
     {
@@ -242,7 +250,7 @@ Function Modify_autounattend_File
     Replace_Placeholders -OldValue "%Subnet%" -NewValue $SubnetSegment -Temp_Folder_Data $Temp_Folder_Data
     Replace_Placeholders -OldValue "%IpAddress%" -NewValue $IP -Temp_Folder_Data $Temp_Folder_Data
     Replace_Placeholders -OldValue "%Gateway%" -NewValue $Gateway -Temp_Folder_Data $Temp_Folder_Data
-    Replace_Placeholders -OldValue "%Computername%" -NewValue $Servername -Temp_Folder_Data $Temp_Folder_Data
+    Replace_Placeholders -OldValue "%COMPUTERNAME%" -NewValue $Servername -Temp_Folder_Data $Temp_Folder_Data
     Replace_Placeholders -OldValue "%DNS1%" -NewValue $DNS -Temp_Folder_Data $Temp_Folder_Data
     Replace_Placeholders -OldValue "%Suffix%" -NewValue $Domain_Suffix -Temp_Folder_Data $Temp_Folder_Data
 }
@@ -321,7 +329,7 @@ Function Cleanup
 Mount-StandardISO -Image_Path $Image_Path -Temp_Folder_Data $Temp_Folder_Data -Temp_Folder_WIM $Temp_Folder_WIM
 
 #Modify unattended.xml
-Modify_autounattend_File -Servername $Servername -File_Path $autounattend_File_Path -Temp_Folder_Data $Temp_Folder_Data -IP $IP -Gateway $Gateway -Subnet $Subnet -DNS $DNS -Suffix $Domain_Suffix
+Modify_autounattend_File -Servername $Servername -File_Path $autounattend_File_Path -Temp_Folder_Data $Temp_Folder_Data -IP $IP -Gateway $Gateway -Subnet $Subnet -DNS $DNS -Domain_Suffix $Domain_Suffix
 
 #Copy install.wim to ISO directory
 Copy-InstallWIM -Temp_Folder_WIM $Temp_Folder_WIM -Temp_Folder_Data $Temp_Folder_Data

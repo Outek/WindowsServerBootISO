@@ -54,10 +54,19 @@ If($Temp_Folder_Data.Length -lt 1)
 {
     $Temp_Folder_Data = "C:\Temp\ISO"
 }
+If(!(Test-Path $Temp_Folder_Data))
+{
+    Write-Debug "Folder $Temp_Folder_Data not found"
+}
 
 If($Temp_Folder_WIM.Length -lt 1)
 {
     $Temp_Folder_WIM = "C:\Temp\WIM"
+}
+If(!(Test-Path $Temp_Folder_WIM))
+{
+    Write-Debug "Folder $Temp_Folder_WIM not found"
+    exit
 }
 
 #path to the image
@@ -65,11 +74,21 @@ If($Image_Path.Length -lt 1)
 {
     $Image_Path = "C:\Temp\Original_ISO\14393.0.160715-1616.RS1_RELEASE_SERVER_EVAL_X64FRE_EN-US.ISO"    
 }
+If(!(Test-Path $Image_Path))
+{
+    Write-Debug "Iso not found"
+    Exit
+}
 
 #Path to the prepared autoattend.xml
 If($autounattend_File_Path.Length -lt 1)
 {
     $autounattend_File_Path = "..\Answer_File_staticIP_UEFI\autounattend.xml"
+}
+If(!(Test-Path $autounattend_File_Path))
+{
+    Write-Debug "Autounattend $autoattend_File_Path not found"
+    Exit
 }
 
 #Servername
@@ -105,6 +124,11 @@ If($DNS.Length -lt 1)
 if($Path_to_Oscdimg.Length -lt 1)
 {
     $Path_to_Oscdimg = "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit\Deployment Tools\amd64\Oscdimg"
+}
+If(!(Test-Path $Path_to_Oscdimg))
+{
+    Write-Debug "Path to oscdimg not found"
+    Exit
 }
 
 Write-Debug "Servername: $Servername"

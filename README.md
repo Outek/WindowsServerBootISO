@@ -18,7 +18,7 @@ In this example the chosen Version is "Windows Server 2016 SERVERDATACENTER"
 - Fixed network settings
 - Windows Server 2016 ISO File
 - Prepared autounattended.xml file with a placeholder for the computername %COMPUTERNAME%, %IpAddress%, %Subnet%, %Gateway%, %Suffix%, %DNS%
-- Deployment and Imaging Tools Environment
+- Installed Deployment and Imaging Tools Environment
 - Windows ADK(Assessment and Deployment Kit)
 
 # Optional
